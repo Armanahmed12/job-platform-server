@@ -1,0 +1,6 @@
+node_modules
+dist
+.env
+test.txt
+builder
+src/app/config/firebase-admin.json
