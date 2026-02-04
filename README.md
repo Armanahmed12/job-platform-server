@@ -1,1 +1,1 @@
-# university-backend
+# job-platform-server
