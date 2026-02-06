@@ -26,7 +26,6 @@ const applyToJob = catchAsync(async (req: Request, res: Response) => {
 // 2. ------------ Get all applications (optional filter by userId or jobId)
 const getApplications = catchAsync(async (req: Request, res: Response) => {
   const { userId, jobId } = req.user;
-
   const applications = await ApplicationService.getApplications({
     userId,
     jobId

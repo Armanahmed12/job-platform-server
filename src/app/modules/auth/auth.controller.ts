@@ -8,12 +8,13 @@ const loginUser = catchAsync(async (req, res) => {
   const { accessToken, refreshToken } = await AuthServices.loginUser(req.user);
 
   // 2️⃣ Set HttpOnly refresh token cookie
-  res.cookie('refreshToken', refreshToken, {
-    httpOnly: true, // JS cannot access
-    secure: config.NODE_ENV === 'production', // only HTTPS in production
-    sameSite: 'strict', // CSRF protection
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days, must match DB expiry
-  });
+ res.cookie('refreshToken', refreshToken, {
+  httpOnly: true,
+  secure: true,          // ALWAYS true on Vercel
+  sameSite: 'none',      // REQUIRED for cross-site
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+});
+
 
   // 3️⃣ Return access token in response body
   res.status(200).json({
