@@ -51,9 +51,8 @@ const auth = () => {
 
       next();
     } catch (error) {
-      
       if (error instanceof jwt.TokenExpiredError) {
-        const expiredToken =new AppError(
+        const expiredToken = new AppError(
             httpStatus.UNAUTHORIZED,
             'Access token expired',
             'TOKEN_EXPIRED'

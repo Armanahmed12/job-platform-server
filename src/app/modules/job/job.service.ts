@@ -9,12 +9,15 @@ const createJob = async (jobData: IJob): Promise<IJob> => {
   return job;
 };
 
-// Get all jobs, optional filter by status
-const getJobs = async (email?: string): Promise<IJob[]> => {
-  const query = email ? {hr_email: email} : {};
-  return Job.find(query).sort({ createdAt: -1 });
+// Get all jobs
+const getJobs = async (): Promise<IJob[]> => {
+  return Job.find({}).sort({ createdAt: -1 });
 };
 
+// Get specific jobs through email
+const getJobsByEmail = async (email:string) => {
+  return Job.find({ hr_email : email });
+};
 // Get job by ID
 const getJobById = async (jobId: string): Promise<IJob | null> => {
   if (!Types.ObjectId.isValid(jobId)) return null;
@@ -40,4 +43,5 @@ export const jobService = {
   getJobById,
   updateJob,
   deleteJob,
+  getJobsByEmail
 };

@@ -66,7 +66,7 @@ const loginUser = async (firebaseUser: {
   };
 };
 
-// 2. ------------------ refreshAccessToken
+// 2. ------------ get new accessToken through refreshToken
  const refreshAccessToken = async (refreshToken: string) => {
   if (!refreshToken) {
     throw new AppError(httpStatus.UNAUTHORIZED, "No refresh token provided");

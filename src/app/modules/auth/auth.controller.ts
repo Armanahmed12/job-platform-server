@@ -23,8 +23,7 @@ const loginUser = catchAsync(async (req, res) => {
 });
 
 const refreshAccessToken = catchAsync(async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
-
+  const refreshToken = req.cookies?.refreshToken;
   const accessToken = await AuthServices.refreshAccessToken(refreshToken);
 
   res.status(200).json({
