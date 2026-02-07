@@ -11,14 +11,21 @@ const app: Application = express();
 // ✅ Use cookie-parser middleware
 app.use(cookieParser());
 
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://192.168.0.108:5173',
-    'https://job-platform-server-alpha.vercel.app', // ADD THIS
-  ],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://job-platform-44760.web.app",
+      "https://job-platform-44760.firebaseapp.com"
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  })
+);
+
+// VERY IMPORTANT
+app.options("*", cors());
 
 
 app.use(express.json());

@@ -41,11 +41,12 @@ const logoutUser = catchAsync(async (req, res) => {
   }
 
   // Clear cookie no matter what
-  res.clearCookie("refreshToken", {
-    httpOnly: true,
-    secure: config.NODE_ENV === "production",
-    sameSite: "strict",
-  });
+ res.clearCookie("refreshToken", {
+  httpOnly: true,
+  secure: true,       // REQUIRED when sameSite = none
+  sameSite: "none",
+});
+
 
   res.status(httpStatus.OK).json({
     success: true,
