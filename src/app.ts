@@ -1,42 +1,49 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import notFound from './app/middlewares/notFound.js';
 import globalErrorHandler from './app/middlewares/globalErrorHandler.js';
 import router from './app/routes/index.js';
-import cookieParser from 'cookie-parser';
+
 const app: Application = express();
 
-// middleware
+// ----------------------------
+// ✅ 1. CORS middleware (must come FIRST)
+// ----------------------------
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://job-platform-44760.web.app",
+];
 
-// ✅ Use cookie-parser middleware
+// middleware
+app.use(cors({ origin: allowedOrigins, credentials: true }));
+
+// ----------------------------
+// ✅ 3. Cookie parser (after CORS)
+// ----------------------------
 app.use(cookieParser());
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://job-platform-44760.web.app",
-      "https://job-platform-44760.firebaseapp.com"
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-  })
-);
-
-// VERY IMPORTANT
-app.options("*", cors());
-
-
+// ----------------------------
+// ✅ 4. Body parser
+// ----------------------------
 app.use(express.json());
 
+// ----------------------------
+// ✅ 5. Test route
+// ----------------------------
 app.get('/', async (req: Request, res: Response) => {
   res.send('Hello World!');
 });
 
-// student routes 👇
+// ----------------------------
+// ✅ 6. API routes
+// ----------------------------
 app.use('/api/v1', router);
 
+// ----------------------------
+// ✅ 7. 404 + global error handler
+// ----------------------------
 app.use(notFound);
 app.use(globalErrorHandler);
+
 export default app;
